@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Flex Photo Gallery</title>
+  <style>
+    :root{
+      --gap: 12px;
+      --card-radius: 10px;
+      --overlay-bg: rgba(0,0,0,0.45);
+      --accent: #ffd54f;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Arial;
+      background: #f3f6fb;
+      color:#111;
+      padding:24px;
+    }
+
+    h1{
+      text-align:center;
+      margin:0 0 18px 0;
+      font-weight:600;
+    }
+
+    .gallery{
+      display:flex;
+      flex-wrap:wrap;
+      gap:var(--gap);
+      justify-content:center;
+      align-items:flex-start;
+      max-width:1200px;
+      margin:0 auto;
+    }
+
+    .item{
+      flex: 1 1 calc(33.333% - var(--gap));
+      max-width: calc(33.333% - var(--gap));
+      background: rgb(164, 192, 233);
+      border-radius: var(--card-radius);
+      overflow:hidden;
+      box-shadow: 0 6px 18px rgba(16,24,40,0.06);
+      transition: transform .18s ease, box-shadow .18s ease;
+      cursor: pointer;
+      display:flex;
+      flex-direction:column;
+    }
+
+    .item img{
+      width:100%;
+      height:200px;
+      object-fit:cover;
+      display:block;
+    }
+
+    .meta{
+      padding:10px 12px;
+      font-size:14px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:8px;
+    }
+
+    .meta .title{font-weight:600}
+    .meta .tag{font-size:12px; color:#6b7280}
+
+    .item:hover{ transform: translateY(-6px); box-shadow: 0 14px 34px rgba(16,24,40,0.12); }
+
+    @media (max-width:980px){
+      .item{ flex:1 1 calc(50% - var(--gap)); max-width: calc(50% - var(--gap)); }
+      .item img{ height:160px }
+    }
+    @media (max-width:560px){
+      .item{ flex:1 1 100%; max-width:100%; }
+      .item img{ height:220px }
+    }
+
+    .lightbox{
+      position:fixed; inset:0; display:none; place-items:center; background:rgba(0,0,0,0.8); z-index:60;
+      padding:20px;
+    }
+    .lightbox.open{display:grid}
+    .lightbox img{ max-width:95%; max-height:85%; border-radius:8px; box-shadow:0 20px 60px rgba(2,6,23,0.6)}
+    .lightbox .close{ position:absolute; top:18px; right:22px; background:var(--accent); border-radius:999px; padding:8px 10px; font-weight:700; cursor:pointer }
+
+    .credits{ text-align:center; margin-top:18px; font-size:13px; color:#475569 }
+  </style>
+</head>
+<body>
+  <h1>Photo Gallery (Flex)</h1>
+
+  <div class="gallery" id="gallery">
+    <div class="item" data-full="https://picsum.photos/id/1015/1200/800">
+      <img src="https://picsum.photos/id/1015/600/400" alt="Mountain Lake">
+      <div class="meta"><div class="title">Mountain Lake</div><div class="tag">Nature</div></div>
+    </div>
+
+    <div class="item" data-full="https://picsum.photos/id/1025/1200/800">
+      <img src="https://picsum.photos/id/1025/600/400" alt="Puppy Portrait">
+      <div class="meta"><div class="title">Puppy Portrait</div><div class="tag">Animals</div></div>
+    </div>
+
+    <div class="item" data-full="https://picsum.photos/id/1035/1200/800">
+      <img src="https://picsum.photos/id/1035/600/400" alt="Bridge Path">
+      <div class="meta"><div class="title">Bridge Path</div><div class="tag">Architecture</div></div>
+    </div>
+
+    <div class="item" data-full="https://picsum.photos/id/1043/1200/800">
+      <img src="https://picsum.photos/id/1043/600/400" alt="Autumn Trees">
+      <div class="meta"><div class="title">Autumn Trees</div><div class="tag">Seasons</div></div>
+    </div>
+
+    <div class="item" data-full="https://picsum.photos/id/1056/1200/800">
+      <img src="https://picsum.photos/id/1056/600/400" alt="City Sunset">
+      <div class="meta"><div class="title">City Sunset</div><div class="tag">Urban</div></div>
+    </div>
+
+    <div class="item" data-full="https://picsum.photos/id/1069/1200/800">
+      <img src="https://picsum.photos/id/1069/600/400" alt="Desert Dunes">
+      <div class="meta"><div class="title">Desert Dunes</div><div class="tag">Landscape</div></div>
+    </div>
+  </div>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+    <button class="close" id="closeBtn">✕</button>
+    <img id="lightboxImg" src="" alt="Expanded photo">
+  </div>
+
+  <div class="credits">Click any photo to view larger. Images from picsum.photos (placeholder).</div>
+
+
+</body>
+</html>
